@@ -5,5 +5,6 @@ target 'WeatherApp' do
 
   pod 'Alamofire', '~> 4.5'
   pod 'SwiftyJSON'
+  pod 'ReachabilitySwift'
   
 end

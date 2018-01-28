@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Reachability
 
 class WeatherListViewController: UIViewController
 {
@@ -53,6 +54,22 @@ extension WeatherListViewController
     override func viewWillAppear(_ animated: Bool)
     {
         weatherListController.getCurrentWeathersOnline(completionCallback: updateCityCurrentWeathers)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged), name: NSNotification.Name(rawValue: Notifications.offlineNotification), object: nil)
+    }
+    
+    @objc func reachabilityChanged(note: Notification)
+    {
+        if ConnectionController.shared.isOnline
+        {
+            title = "Weather"
+            
+            weatherListController.getCurrentWeathersOnline(completionCallback: updateCityCurrentWeathers)
+        }
+        else
+        {
+            title = "Weather(offline)"
+        }
     }
     
     private func updateCityCurrentWeathers(_ newCityCurrentWeathers: [CityCurrentWeather])
@@ -62,10 +79,6 @@ extension WeatherListViewController
             self.cities = newCityCurrentWeathers
             
             self.tableView.reloadData()
-        }
-        else
-        {
-            alert(title: "Error", message: "Could not load actual data. Check you internet connection. Only saved data will be available")
         }
     }
 }

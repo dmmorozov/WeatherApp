@@ -10,12 +10,14 @@ import CoreData
 
 class LocalStorage
 {
+    /// Init
     init()
     {
         createCity(title: "Moscow", cityId: "524901")
         createCity(title: "Saint Petersburg", cityId: "498817")
     }
     
+    /// Singleton
     static let sharedInstance = LocalStorage()
     
     lazy var persistentContainer: NSPersistentContainer =
