@@ -12,6 +12,7 @@ import SwiftyJSON
 
 class WeatherService
 {
+    /// Singleton
     static let sharedInstance = WeatherService()
 }
 
