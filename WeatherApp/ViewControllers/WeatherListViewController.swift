@@ -58,6 +58,13 @@ extension WeatherListViewController
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged), name: NSNotification.Name(rawValue: Notifications.offlineNotification), object: nil)
     }
     
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Notifications.offlineNotification), object: nil)
+    }
+    
     @objc func reachabilityChanged(note: Notification)
     {
         if ConnectionController.shared.isOnline
@@ -98,7 +105,14 @@ extension WeatherListViewController
 {
     @IBAction func onAddBarButtonItem(_ sender: Any)
     {
-        alertWithTextInput(title: "New city", message: "Enter the name") { self.weatherListController.addNewCity(city: $0, completionCallback: self.addNewCityCurrentWeather) }
+        if ConnectionController.shared.isOnline
+        {
+            alertWithTextInput(title: "New city", message: "Enter the name") { self.weatherListController.addNewCity(city: $0, completionCallback: self.addNewCityCurrentWeather) }
+        }
+        else
+        {
+            alert(title: "Error", message: "You can't add cities in offline")
+        }
     }
     
     private func addNewCityCurrentWeather(_ newCityCurrentWeather: CityCurrentWeather?, addCityResult: AddCityResult)
