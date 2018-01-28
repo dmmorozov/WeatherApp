@@ -34,7 +34,7 @@ class LocalStorage
         return container
     }()
     
-    func saveContext(context: NSManagedObjectContext? = nil)
+    private func saveContext(context: NSManagedObjectContext? = nil)
     {
         let context = context ?? persistentContainer.viewContext
         

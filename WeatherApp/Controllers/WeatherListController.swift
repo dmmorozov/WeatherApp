@@ -6,8 +6,6 @@
 //  Copyright © 2018 Dmitrii Morozov. All rights reserved.
 //
 
-import Foundation
-
 class WeatherListController
 {
     func getCurrentWeathersOnline(completionCallback: @escaping ([CityCurrentWeather]) -> Void)
