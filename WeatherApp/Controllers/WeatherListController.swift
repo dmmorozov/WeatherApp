@@ -8,7 +8,7 @@
 
 class WeatherListController
 {
-    func getCurrentWeathersOnline(completionCallback: @escaping ([CityCurrentWeather]) -> Void)
+    func getCurrentWeatherItemsOnline(completionCallback: @escaping ([CityCurrentWeather]) -> Void)
     {
         if let cities = LocalStorage.sharedInstance.getCities()
         {

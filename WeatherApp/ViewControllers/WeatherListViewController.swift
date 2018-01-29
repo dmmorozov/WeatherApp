@@ -52,7 +52,7 @@ extension WeatherListViewController
     
     override func viewWillAppear(_ animated: Bool)
     {
-        weatherListController.getCurrentWeathersOnline(completionCallback: updateCityCurrentWeathers)
+        weatherListController.getCurrentWeatherItemsOnline(completionCallback: updateCityCurrentWeatherItems)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged), name: NSNotification.Name(rawValue: Notifications.offlineNotification), object: nil)
     }
@@ -70,7 +70,7 @@ extension WeatherListViewController
         {
             title = "Weather"
             
-            weatherListController.getCurrentWeathersOnline(completionCallback: updateCityCurrentWeathers)
+            weatherListController.getCurrentWeatherItemsOnline(completionCallback: updateCityCurrentWeatherItems)
         }
         else
         {
@@ -78,11 +78,11 @@ extension WeatherListViewController
         }
     }
     
-    private func updateCityCurrentWeathers(_ newCityCurrentWeathers: [CityCurrentWeather])
+    private func updateCityCurrentWeatherItems(_ newCityCurrentWeatherItems: [CityCurrentWeather])
     {
-        if newCityCurrentWeathers.count > 0
+        if newCityCurrentWeatherItems.count > 0
         {
-            self.cityCurrentWeatherItems = newCityCurrentWeathers
+            self.cityCurrentWeatherItems = newCityCurrentWeatherItems
             
             self.tableView.reloadData()
         }
