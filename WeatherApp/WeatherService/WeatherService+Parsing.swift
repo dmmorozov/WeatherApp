@@ -55,7 +55,7 @@ extension WeatherService
         }
     }
     
-    func parseJsonForecastItem(_ json: JSON) -> Forecast?
+    func parseForecastItem(_ json: JSON) -> Forecast?
     {
         let date = parseUnixDate(json["dt"])
         let temperature = json["temp"]["day"].int
@@ -76,7 +76,7 @@ extension WeatherService
         
         for jsonForecastItem in jsonForecastList
         {
-            if let forecastItem = parseJsonForecastItem(jsonForecastItem)
+            if let forecastItem = parseForecastItem(jsonForecastItem)
             {
                 resultForecastList.append(forecastItem)
             }
