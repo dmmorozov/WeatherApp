@@ -55,7 +55,7 @@ extension WeatherDetailViewController
         loadDataFromDatabase()
     }
     
-    func loadDataFromDatabase()
+    private func loadDataFromDatabase()
     {
         forecastItems = weatherDetailController.getForecastFromDatabase(cityId: cityCurrentWeather.cityId)
     }
@@ -63,6 +63,23 @@ extension WeatherDetailViewController
     override func viewWillAppear(_ animated: Bool)
     {
         weatherDetailController.getForecast(cityId: cityCurrentWeather.cityId, completionCallback: refreshForecast)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged), name: NSNotification.Name(rawValue: Notifications.offlineNotification), object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Notifications.offlineNotification), object: nil)
+    }
+    
+    @objc func reachabilityChanged(note: Notification)
+    {
+        if ConnectionController.shared.isOnline
+        {
+            weatherDetailController.getForecast(cityId: cityCurrentWeather.cityId, completionCallback: refreshForecast)
+        }
     }
     
     private func refreshForecast(forecastItems: [Forecast])
