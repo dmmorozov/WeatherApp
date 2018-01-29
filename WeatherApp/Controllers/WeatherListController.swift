@@ -14,11 +14,11 @@ class WeatherListController
         {
             WeatherService.sharedInstance.getCurrentWeathers(cityIds: cities.map{ $0.id! })
             {
-                cityCurrentWeathers in
+                cityCurrentWeatherItems in
                 
-                LocalStorage.sharedInstance.createOrUpdateCityCurrentWeatherItems(items: cityCurrentWeathers)
+                LocalStorage.sharedInstance.createOrUpdateCityCurrentWeatherItems(items: cityCurrentWeatherItems)
                 
-                completionCallback(cityCurrentWeathers)
+                completionCallback(cityCurrentWeatherItems)
             }
         }
         else
@@ -36,7 +36,6 @@ class WeatherListController
             
             for city in cities
             {
-                
                 if let currentWeather = LocalStorage.sharedInstance.getCityCurrentWeather(cityId: city.id!)
                 {
                     let cityCurrentWeather = CityCurrentWeather(title: city.title!,

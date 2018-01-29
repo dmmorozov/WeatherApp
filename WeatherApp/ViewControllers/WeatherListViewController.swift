@@ -18,14 +18,14 @@ class WeatherListViewController: UIViewController
     let weatherListController = WeatherListController()
     
     /// State
-    var citieCurrentWeatherItems: [CityCurrentWeather] = []
+    var cityCurrentWeatherItems: [CityCurrentWeather] = []
 }
 
 extension WeatherListViewController
 {
     func loadDataFromDatabase()
     {
-        citieCurrentWeatherItems = weatherListController.getCurrentWeathersFromDatabase()
+        cityCurrentWeatherItems = weatherListController.getCurrentWeathersFromDatabase()
     }
 }
 
@@ -82,7 +82,7 @@ extension WeatherListViewController
     {
         if newCityCurrentWeathers.count > 0
         {
-            self.citieCurrentWeatherItems = newCityCurrentWeathers
+            self.cityCurrentWeatherItems = newCityCurrentWeathers
             
             self.tableView.reloadData()
         }
@@ -125,8 +125,8 @@ extension WeatherListViewController
             alert(title: "Error", message: "The city is already on the list")
             
         case .success:
-            citieCurrentWeatherItems.append(newCityCurrentWeather!)
-            self.tableView.insertRows(at: [IndexPath(row: citieCurrentWeatherItems.count - 1, section: 0)], with: .top)
+            cityCurrentWeatherItems.append(newCityCurrentWeather!)
+            self.tableView.insertRows(at: [IndexPath(row: cityCurrentWeatherItems.count - 1, section: 0)], with: .top)
         }
     }
 }
@@ -138,7 +138,7 @@ extension WeatherListViewController
     {
         if let detailViewController = segue.destination as? WeatherDetailViewController
         {
-            detailViewController.setup(citieCurrentWeatherItems[(tableView.indexPathForSelectedRow?.row)!])
+            detailViewController.setup(cityCurrentWeatherItems[(tableView.indexPathForSelectedRow?.row)!])
             tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: true)
         }
     }
@@ -154,25 +154,25 @@ extension WeatherListViewController: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return citieCurrentWeatherItems.count
+        return cityCurrentWeatherItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityWeatherCell.identifier, for: indexPath) as! CityWeatherCell
         
-        cell.setup(currentWeather: citieCurrentWeatherItems[indexPath.row])
+        cell.setup(currentWeather: cityCurrentWeatherItems[indexPath.row])
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
     {
-        if citieCurrentWeatherItems[indexPath.row].cityId != "524901" && citieCurrentWeatherItems[indexPath.row].cityId != "498817"
+        if cityCurrentWeatherItems[indexPath.row].cityId != "524901" && cityCurrentWeatherItems[indexPath.row].cityId != "498817"
         {
-            weatherListController.deleteCity(cityId: citieCurrentWeatherItems[indexPath.row].cityId)
+            weatherListController.deleteCity(cityId: cityCurrentWeatherItems[indexPath.row].cityId)
             
-            citieCurrentWeatherItems.remove(at: indexPath.row)
+            cityCurrentWeatherItems.remove(at: indexPath.row)
             
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
